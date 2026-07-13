@@ -7,10 +7,10 @@ set -o pipefail
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-VERSION="v2.12.0"
+VERSION="v2.23.0"
 
 BUILDPACK_DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
-CACHED_BINARY="$CACHE_DIR/cloud-sql-proxy"
+CACHED_BINARY="$CACHE_DIR/cloud-sql-proxy-${VERSION}"
 
 # Download cloud-sql-proxy if not cached
 if [ ! -f "$CACHED_BINARY" ]; then
@@ -25,7 +25,7 @@ BINARY_VERSION=$($CACHED_BINARY --version)
 # Install to build dir
 echo "☁️ Installing cloud-sql-proxy version: $BINARY_VERSION"
 mkdir -p "$BUILD_DIR/google/bin"
-cp "$CACHED_BINARY" "$BUILD_DIR/google/bin"
+cp "$CACHED_BINARY" "$BUILD_DIR/google/bin/cloud-sql-proxy"
 chmod +x "$BUILD_DIR/google/bin/cloud-sql-proxy"
 
 # Start proxy on dyno boot
